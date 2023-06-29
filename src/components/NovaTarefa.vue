@@ -27,7 +27,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useTaskList, ['getTask', 'getName', 'getCount']),
+    ...mapState(useTaskList, ['getTask', 'getName', 'getCount', 'possuiTarefasPendentes', 'possuiTarefasEmAndamento', 'possuiTarefasConcluidas', 'possuiTarefas']),
   },
 
   methods: {
@@ -40,18 +40,32 @@ export default {
       }
     },
     clearAll() {
-      const fnConfirma = () => {
-        success('Sucesso!', 'Seu novo "Nome de Usuário" foi salvo.');
-      }; 
-      const fnRejeita = () => {
-        error('Erro!', 'Seu novo "Nome de Usuário" foi salvo.');
-      };
-
-      confirm('titulo', 'mensagem', fnConfirma, fnRejeita);
-      // this.clearAllTasks();
+      if (this.possuiTarefas()) {
+        const fnConfirma = () => {
+          this.clearAllTasks();
+          success('Sucesso!', 'Suas tarefas foram limpas com sucesso.');
+        };
+        const fnRejeita = () => {
+          error('Atenção!', 'A limpeza da lista foi cancelada.');
+        };
+        confirm('Limpar Todas?', 'Tem certeza que deseja limpar as tarefas da sua lista?', "pi pi-question-circle", fnConfirma, fnRejeita);
+      } else {
+        warn('Aviso!', 'Não há tarefas à serem limpas.');
+      }
     },
     clearComplete() {
-      this.clearCompleteTasks();
+      if (this.possuiTarefasConcluidas()) {
+        const fnConfirma = () => {
+          this.clearCompleteTasks();
+          success('Sucesso!', 'Suas tarefas concluídas foram limpas com sucesso.');
+        };
+        const fnRejeita = () => {
+          error('Atenção!', 'A limpeza da lista foi cancelada.');
+        };
+        confirm('Limpar Concluídas?', 'Tem certeza que deseja limpar as tarefas concluídas da sua lista?', "pi pi-question-circle", fnConfirma, fnRejeita);
+      } else {
+        warn('Aviso!', 'Não há tarefas concluídas à serem limpas.');
+      }
     },
   },
   data() {

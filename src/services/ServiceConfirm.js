@@ -1,8 +1,8 @@
 import app from '../main';
 
-export function confirm(titulo, message, fnConfirm, fnReject, fnShow, fnHide) {
+export function confirm(titulo, message, icon, fnConfirm, fnReject, fnShow, fnHide) {
   app.config.globalProperties.$confirm.require({
-    icon: 'pi pi-exclamation-triangle',
+    icon: icon,
     header: titulo,
     message: message,
     accept: fnConfirm,

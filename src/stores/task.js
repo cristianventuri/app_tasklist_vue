@@ -4,6 +4,9 @@ export const useTaskList = defineStore('tasklist', {
   state: () => {
     return {
       counter_id: 0,
+      pendente: 0,
+      andamento: 1,
+      concluido: 2,
       list: __load('tasklist') ?? [],
     }
   },
@@ -30,9 +33,24 @@ export const useTaskList = defineStore('tasklist', {
       __save('tasklist', this.list);
     },
     clearCompleteTasks() {
-      this.clearAllTasks();
+      let newlist = this.list.filter(tasklist => tasklist.status !== this.concluido);
+      newlist = (typeof newlist === 'object') ? newlist : [];
+      this.list = newlist;
+      __save('tasklist', this.list);
     },
-    getTasklistStorage(){
+    possuiTarefas() {
+      return this.list.length > 0;
+    },
+    possuiTarefasConcluidas() {
+      return this.list.filter(task => task.status === this.concluido).length > 0;
+    },
+    possuiTarefasEmAndamento() {
+      return this.list.filter(task => task.status === this.andamento).length > 0;
+    },
+    possuiTarefasPendentes() {
+      return this.list.filter(task => task.status === this.pendente).length > 0;
+    },
+    getTasklistStorage() {
       return __load('tasklist');
     }
   },
