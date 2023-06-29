@@ -4,6 +4,8 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
+import DialogService from 'primevue/dialogservice'
+import ConfirmationService from 'primevue/confirmationservice';
 
 /* Default VUE */
 import './assets/style/css/base.css'
@@ -34,7 +36,9 @@ const pinia = createPinia();
 app.use(pinia)
 app.use(router)
 app.use(PrimeVue)
-app.use(ToastService)
+app.use(ToastService);
+app.use(DialogService);
+app.use(ConfirmationService);
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 export default app;

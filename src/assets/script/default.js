@@ -6,7 +6,9 @@ window.__dynamicSort = (prop) => {
     }
 
     return (obj_a, obj_b) => {
-        var resultado = (obj_a[prop] < obj_b[prop]) ? -1 : (obj_a[prop] > obj_b[prop]) ? 1 : 0;
+        let item_a = (typeof obj_a[prop] === 'string') ? obj_a[prop].toLowerCase() : obj_a[prop];
+        let item_b = (typeof obj_b[prop] === 'string') ? obj_b[prop].toLowerCase() : obj_b[prop];
+        var resultado = (item_a < item_b) ? -1 : (item_a > item_b) ? 1 : 0;
         return resultado * ordem;
     }
 }
@@ -19,4 +21,13 @@ window.__dynamicMultiSort = (props) => {
         }
         return resultado;
     }
+}
+
+window.__save = (item, data) => {
+    data = (typeof data !== 'string') ? JSON.stringify(data) : data;
+    localStorage.setItem(item, data);
+}
+
+window.__load = (item) => {
+    return JSON.parse(localStorage.getItem(item));
 }

@@ -16,6 +16,9 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { useTaskList } from '@/stores/task.js'
 import { mapActions, mapState } from 'pinia';
+import { info, success, warn, error } from '@/services/ServiceToast';
+import { confirm } from '@/services/ServiceConfirm';
+
 export default {
   name: "NovaTarefa",
   components: {
@@ -37,7 +40,9 @@ export default {
       }
     },
     clearAll() {
-      this.clearAllTasks();
+      success('Sucesso!', 'Seu novo "Nome de Usuário" foi salvo.');
+      // confirm();
+      // this.clearAllTasks();
     },
     clearComplete() {
       this.clearCompleteTasks();
