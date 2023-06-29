@@ -1,10 +1,19 @@
 import app from '../main';
 
-export function confirm(titulo, message, fnShow, fnHide) {
+export function confirm(titulo, message, fnConfirm, fnReject, fnShow, fnHide) {
   app.config.globalProperties.$confirm.require({
+    icon: 'pi pi-exclamation-triangle',
     header: titulo,
     message: message,
+    accept: fnConfirm,
+    reject: fnReject,
     onShow: fnShow,
-    onHide: fnHide
+    onHide: fnHide,
+    acceptIcon: 'pi pi-check',
+    acceptLabel: 'Confirmar',
+    acceptClass: 'p-button-primary p-button-rounded p-button-sm p-button-text',
+    rejectIcon: 'pi pi-times',
+    rejectLabel: 'Cancelar',
+    rejectClass: 'p-button-danger p-button-rounded p-button-sm p-button-text',
   });
 };

@@ -40,8 +40,14 @@ export default {
       }
     },
     clearAll() {
-      success('Sucesso!', 'Seu novo "Nome de Usuário" foi salvo.');
-      // confirm();
+      const fnConfirma = () => {
+        success('Sucesso!', 'Seu novo "Nome de Usuário" foi salvo.');
+      }; 
+      const fnRejeita = () => {
+        error('Erro!', 'Seu novo "Nome de Usuário" foi salvo.');
+      };
+
+      confirm('titulo', 'mensagem', fnConfirma, fnRejeita);
       // this.clearAllTasks();
     },
     clearComplete() {
