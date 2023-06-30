@@ -1,7 +1,7 @@
 <template>
   <div class="component-newtask">
     <span class="content-input p-input-icon-left">
-      <font-awesome-icon :icon="['fas', 'list-check']" />
+      <i class="pi pi-inbox"></i>
       <InputText type="text" v-model="newtask" placeholder="Informe uma tarefa..." @keypress="this.addNewTask" />
     </span>
     <div class="content-action">
@@ -87,9 +87,9 @@ export default {
       width: 100%;
     }
 
-    svg {
+    i {
       z-index: 1;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
 
