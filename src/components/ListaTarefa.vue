@@ -1,19 +1,25 @@
 <template>
   <div class="component-takslist">
-    <ul class="list">
-      <li class="task" v-for="task in this.getPendentes" :data-id="task.id">
+    <ul class="list" v-if="this.possuiTarefas()">
+      <li class="task" v-for="task in this.list" :data-id="task.id">
         <span class="status-icon">
-          <i class="pi pi-exclamation-circle"></i>
-          <i class="pi pi-times-circle"></i>
-          <i class="pi pi-check-circle"></i>
+          <i :class="getClassIconStatus(task.status)"></i>
         </span>
-
+        <span>
+          <p class="task-title">{{ task.titulo }}</p>
+          <input class="task-title-input" type="text" v-model="task.titulo">
+        </span>
         <span class="actions">
-          <i class="btn-icon btn-editar pi pi-pencil"></i>
-          <i class="btn-icon btn-excluir pi pi-trash"></i>
+          <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
+          <i class="btn-icon btn-excluir pi pi-trash" @click="clickExcluir(task.id)"></i>
         </span>
       </li>
     </ul>
+    <div v-else>
+      <i class="pi pi-thumbs-up-fill"></i>
+      <h4>Você não possui tarefas cadastradas!</h4>
+      <p>Adicione novas tarefas no campo acima...</p>
+    </div>
   </div>
 </template>
 
@@ -25,11 +31,20 @@ import { mapActions, mapState } from 'pinia';
 export default {
   name: "ListaTarefa",
   computed: {
-    ...mapState(useTaskList, ["getPendentes"]),
+    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "list"]),
   },
   methods: {
-    ...mapActions(useTaskList, ["increment"]),
-
+    ...mapActions(useTaskList, ["possuiTarefas"]),
+    getClassIconStatus(status) {
+      switch (status) {
+        case this.pendente:
+          return "pi pi-times-circle";
+        case this.andamento:
+          return "pi pi-exclamation-circle";
+        case this.concluido:
+          return "pi pi-check-circle";
+      }
+    },
     clickEditar() {
       debugger;
     },
@@ -53,6 +68,8 @@ export default {
 
     li {
       list-style: none;
+      display: flex;
+      align-items: center;
 
       .btn-icon {
         font-size: 1rem;

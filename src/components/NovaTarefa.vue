@@ -27,7 +27,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useTaskList, ['getTask', 'getName', 'getCount', 'possuiTarefasPendentes', 'possuiTarefasEmAndamento', 'possuiTarefasConcluidas', 'possuiTarefas']),
+    ...mapState(useTaskList, ['possuiTarefasPendentes', 'possuiTarefasEmAndamento', 'possuiTarefasConcluidas', 'possuiTarefas']),
   },
 
   methods: {
