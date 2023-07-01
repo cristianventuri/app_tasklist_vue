@@ -1,20 +1,10 @@
 <template>
   <div class="component-takslist">
-    <ul class="list" v-if="this.possuiTarefas()">
-      <li class="task" v-for="task in this.list" :data-id="task.id">
-        <span class="status-icon">
-          <i :class="getClassIconStatus(task.status)"></i>
-        </span>
-        <span>
-          <p class="task-title">{{ task.titulo }}</p>
-          <input class="task-title-input" type="text" v-model="task.titulo">
-        </span>
-        <span class="actions">
-          <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
-          <i class="btn-icon btn-excluir pi pi-trash" @click="clickExcluir(task.id)"></i>
-        </span>
-      </li>
-    </ul>
+    <div class="container-listas" v-if="this.possuiTarefas()">
+      <ListaItem :lista="this.getPendentes"/>
+      <ListaItem :lista="this.getEmAndamento"/>
+      <ListaItem :lista="this.getConcluidas"/>
+    </div>
     <div class="sem-registros" v-else>
       <i class="pi pi-thumbs-up-fill"></i>
       <h4>Você não possui tarefas cadastradas!</h4>
@@ -25,13 +15,15 @@
 
 <script>
 import Button from 'primevue/button';
+import ListaItem from './ListaItem.vue';
 import { useTaskList } from '@/stores/task.js'
 import { mapActions, mapState } from 'pinia';
 
 export default {
   name: "ListaTarefa",
+  components: { Button, ListaItem },
   computed: {
-    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "list"]),
+    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "list", "getConcluidas", "getEmAndamento", "getPendentes"]),
   },
   methods: {
     ...mapActions(useTaskList, ["possuiTarefas"]),
@@ -45,36 +37,27 @@ export default {
           return "pi pi-check-circle";
       }
     },
-    clickEditar() {
-      debugger;
-    },
-    clickExcluir() {
-      debugger;
+    getClassStatus(status) {
+      switch (status) {
+        case this.pendente:
+          return "status-icon pendente";
+        case this.andamento:
+          return "status-icon andamento";
+        case this.concluido:
+          return "status-icon concluido";
+      }
     },
   },
-  data() {
-    return {};
-  },
-  components: { Button }
 }
 </script>
     
 <style lang="scss">
 .component-takslist {
+  padding: 1rem 0;
 
-  ul {
-    margin: 0;
-    padding: 0;
-
-    li {
-      list-style: none;
-      display: flex;
-      align-items: center;
-
-      .btn-icon {
-        font-size: 1rem;
-      }
-    }
+  .container-listas {
+    display: flex;
+    gap: 0.5rem;
   }
 
   .sem-registros {

@@ -6,7 +6,7 @@
     </span>
     <div class="content-action">
       <Button label="Limpar Todas" icon="pi pi-times" severity="danger" @click="clearAll()" />
-      <Button label="Limpar Concluídas" icon="pi pi-check" severity="success" @click="clearComplete()" />
+      <Button label="Limpar Concluídas" icon="pi pi-check" severity="warning" @click="clearComplete()" />
     </div>
   </div>
 </template>
@@ -79,12 +79,14 @@ export default {
 <style lang="scss">
 .component-newtask {
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
 
   .content-input {
+    flex: 1;
+
     input {
       width: 100%;
+      height: 3rem;
     }
 
     i {
@@ -98,7 +100,8 @@ export default {
     gap: 0.5rem;
 
     button {
-      flex: 1;
+      width: 15rem;
+      height: 3rem;
     }
   }
 }

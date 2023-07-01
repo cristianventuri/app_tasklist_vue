@@ -25,7 +25,7 @@ export const useTaskList = defineStore('tasklist', {
       __save('tasklist', this.list);
     },
     orderTasklist() {
-      this.list = this.list.sort(__dynamicMultiSort(['titulo', 'id']));
+      this.list = this.list.sort(__dynamicMultiSort(['status', 'titulo', 'id']));
     },
     clearAllTasks() {
       this.counter_id = 0;
@@ -57,7 +57,13 @@ export const useTaskList = defineStore('tasklist', {
 
   getters: {
     getPendentes: (state) => {
-      return state.list;
+      return state.list.filter(task => task.status === state.pendente);
+    },
+    getEmAndamento: (state) => {
+      return state.list.filter(task => task.status === state.andamento);
+    },
+    getConcluidas: (state) => {
+      return state.list.filter(task => task.status === state.concluido);
     },
   },
 })
