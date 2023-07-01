@@ -11,9 +11,9 @@ import ConfirmationService from 'primevue/confirmationservice';
 import './assets/style/css/base.css'
 
 /* PrimeVue */
-// import "primevue/resources/themes/viva-light/theme.css";     
 import "primevue/resources/primevue.min.css";
 import 'primeicons/primeicons.css';
+// import "primevue/resources/themes/viva-light/theme.css";     
 import './assets/style/css/theme.css';
 
 /* jQuery */

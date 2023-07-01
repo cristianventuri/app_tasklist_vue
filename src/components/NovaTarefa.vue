@@ -5,8 +5,8 @@
       <InputText type="text" v-model="newtask" placeholder="Informe uma tarefa..." @keypress="this.addNewTask" />
     </span>
     <div class="content-action">
-      <Button label="Limpar Todas" icon="pi pi-times" rounded severity="danger" @click="clearAll()" />
-      <Button label="Limpar Concluídas" icon="pi pi-check" rounded severity="success" @click="clearComplete()" />
+      <Button label="Limpar Todas" icon="pi pi-times" severity="danger" @click="clearAll()" />
+      <Button label="Limpar Concluídas" icon="pi pi-check" severity="success" @click="clearComplete()" />
     </div>
   </div>
 </template>

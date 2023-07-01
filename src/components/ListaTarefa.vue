@@ -15,7 +15,7 @@
         </span>
       </li>
     </ul>
-    <div v-else>
+    <div class="sem-registros" v-else>
       <i class="pi pi-thumbs-up-fill"></i>
       <h4>Você não possui tarefas cadastradas!</h4>
       <p>Adicione novas tarefas no campo acima...</p>
@@ -74,6 +74,25 @@ export default {
       .btn-icon {
         font-size: 1rem;
       }
+    }
+  }
+
+  .sem-registros {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(0 0 0 / 35%);
+    border-radius: 0.4rem;
+    margin-top: 2rem;
+    padding: 2rem;
+    gap: 0.5rem;
+
+    i {
+      font-size: 2rem;
+    }
+
+    h4 {
+      font-size: 1rem;
     }
   }
 }
