@@ -5,8 +5,8 @@
       <InputText type="text" v-model="newtask" placeholder="Informe uma tarefa..." @keypress="this.addNewTask" />
     </span>
     <div class="content-action">
-      <Button label="Limpar Todas" icon="pi pi-times" severity="danger" @click="clearAll()" />
-      <Button label="Limpar Concluídas" icon="pi pi-check" severity="warning" @click="clearComplete()" />
+      <Button label="Limpar Todas" icon="pi pi-trash" severity="danger" @click="clearAll()" />
+      <Button label="Limpar Concluídas" icon="pi pi-trash" severity="warning" @click="clearComplete()" />
     </div>
   </div>
 </template>
@@ -32,7 +32,6 @@ export default {
 
   methods: {
     ...mapActions(useTaskList, ['addTask', 'clearAllTasks', 'clearCompleteTasks']),
-
     addNewTask(event) {
       if ((event.keyCode === 13) && (this.newtask.trim() !== '')) {
         this.addTask(this.newtask);
@@ -40,7 +39,7 @@ export default {
       }
     },
     clearAll() {
-      if (this.possuiTarefas()) {
+      if (this.possuiTarefas) {
         const fnConfirma = () => {
           this.clearAllTasks();
           success('Sucesso!', 'Suas tarefas foram limpas com sucesso.');
@@ -54,7 +53,7 @@ export default {
       }
     },
     clearComplete() {
-      if (this.possuiTarefasConcluidas()) {
+      if (this.possuiTarefasConcluidas) {
         const fnConfirma = () => {
           this.clearCompleteTasks();
           success('Sucesso!', 'Suas tarefas concluídas foram limpas com sucesso.');

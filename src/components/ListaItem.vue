@@ -1,17 +1,32 @@
 <template>
   <ul class="lista-item">
     <li class="task" v-for="task in this.lista" :data-id="task.id">
-      <span :class="getClassStatus(task.status)">
-        <i :class="getClassIconStatus(task.status)"></i>
-      </span>
-      <span class="description">
+      <div class="header pendente" v-if="task.status === this.pendente">
+        <i class="btn-icon btn-editar pi pi pi-times-circle"></i>
+        <span class="status-icon pendente"> Pendente </span>
+      </div>
+      <div class="header andamento" v-if="task.status === this.andamento">
+        <i class="btn-icon btn-editar pi  pi-exclamation-circle"></i>
+        <span class="status-icon andamento"> Em andamento </span>
+      </div>
+      <div class="header concluido" v-if="task.status === this.concluido">
+        <i class="btn-icon btn-editar pi pi-check-circle"></i>
+        <span class="status-icon concluido"> Concluído </span>
+      </div>
+      <div class="body">
         <p class="task-title">{{ task.titulo }}</p>
-        <input class="task-title-input" type="text" v-model="task.titulo">
-      </span>
-      <span class="actions">
-        <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
-        <i class="btn-icon btn-excluir pi pi-trash" @click="clickExcluir(task.id)"></i>
-      </span>
+      </div>
+      <div class="action">
+        <span class="action-status">
+          <i class="btn-icon btn-editar pi pi pi-times-circle" @click="clickDefineStatus(task.id, this.pendente)" v-if="task.status !== this.pendente"></i>
+          <i class="btn-icon btn-editar pi pi-exclamation-circle" @click="clickDefineStatus(task.id, this.andamento)" v-if="task.status !== this.andamento"></i>
+          <i class="btn-icon btn-editar pi pi-check-circle" @click="clickDefineStatus(task.id, this.concluido)" v-if="task.status !== this.concluido"></i>
+        </span>
+        <span class="action-item">
+          <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
+          <i class="btn-icon btn-excluir pi pi-trash" @click="clickExcluir(task.id)"></i>
+        </span>
+      </div>
     </li>
   </ul>
 </template>
@@ -19,6 +34,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useTaskList } from '@/stores/task.js';
+import { confirm } from '@/services/ServiceConfirm';
 
 export default {
   name: "ListaItem",
@@ -29,25 +45,9 @@ export default {
     ...mapState(useTaskList, ["concluido", "andamento", "pendente"]),
   },
   methods: {
-    getClassIconStatus(status) {
-      switch (status) {
-        case this.pendente:
-          return "pi pi-times-circle";
-        case this.andamento:
-          return "pi pi-exclamation-circle";
-        case this.concluido:
-          return "pi pi-check-circle";
-      }
-    },
-    getClassStatus(status) {
-      switch (status) {
-        case this.pendente:
-          return "status-icon pendente";
-        case this.andamento:
-          return "status-icon andamento";
-        case this.concluido:
-          return "status-icon concluido";
-      }
+    ...mapActions(useTaskList, ['updateTaskStatus']),
+    clickDefineStatus(id, iStatus) {
+      this.updateTaskStatus(id, iStatus);
     },
     clickEditar() {
       debugger;
@@ -69,25 +69,18 @@ export default {
   width: 100%;
 
   li {
-    height: 4rem;
     border-radius: 0.4rem;
-    background-color: white;
+    background-color: rgb(151, 134, 134);
     overflow: hidden;
     list-style: none;
-    display: grid;
-    gap: 0.5rem;
-    align-items: center;
-    grid-template-columns: 2.5rem auto;
 
-    .status-icon {
+    .header {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
-
-      &.concluido {
-        background-color: #8bae2c;
-      }
+      height: 1.4rem;
+      padding: 0.25rem;
+      gap: .4rem;
 
       &.pendente {
         background-color: #d94f3a;
@@ -97,34 +90,35 @@ export default {
         background-color: #ff922a;
       }
 
-      i {
-        font-size: 1.5rem;
+      &.concluido {
+        background-color: #8BAE2C;
       }
     }
 
-    .description {
-      p {
-        height: 3rem;
-        color: black;
+    .body {
+      background-color: white;
+      color: #7a7979;
+      padding: .2rem .5rem;
+      font-size: 1rem;
+    }
+
+    .action {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f1f1f1;
+      color: #797878;
+      padding: .3rem .5rem;
+      border-top: thin solid #ededed;
+
+      .action-status,
+      .action-item {
         display: flex;
         align-items: center;
-        display: none;
-      }
+        gap: 0.4rem;
 
-      input {
-        height: 3rem;
-        width: 100%;
-        border: 0;
-      }
-    }
-
-    .actions {
-      position: absolute;
-      right: 0;
-      color: grey;
-
-      .btn-icon {
-        font-size: 1rem;
+        i {
+          cursor: pointer;
+        }
       }
     }
   }

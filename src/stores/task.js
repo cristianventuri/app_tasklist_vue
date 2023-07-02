@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useTaskList = defineStore('tasklist', {
   state: () => {
     return {
-      counter_id: 0,
+      counter_id: __loadLastId(),
       pendente: 0,
       andamento: 1,
       concluido: 2,
@@ -38,20 +38,12 @@ export const useTaskList = defineStore('tasklist', {
       this.list = newlist;
       __save('tasklist', this.list);
     },
-    possuiTarefas() {
-      return this.list.length > 0;
-    },
-    possuiTarefasConcluidas() {
-      return this.list.filter(task => task.status === this.concluido).length > 0;
-    },
-    possuiTarefasEmAndamento() {
-      return this.list.filter(task => task.status === this.andamento).length > 0;
-    },
-    possuiTarefasPendentes() {
-      return this.list.filter(task => task.status === this.pendente).length > 0;
-    },
-    getTasklistStorage() {
-      return __load('tasklist');
+    updateTaskStatus(id, newstatus) {
+      let index = this.list.findIndex(task => task.id === id);
+      if (index >= 0) {
+        this.list[index].status = newstatus;
+        __save('tasklist', this.list);
+      }
     }
   },
 
@@ -65,5 +57,20 @@ export const useTaskList = defineStore('tasklist', {
     getConcluidas: (state) => {
       return state.list.filter(task => task.status === state.concluido);
     },
+    possuiTarefas(state) {
+      return state.list.length > 0;
+    },
+    possuiTarefasConcluidas(state) {
+      return state.list.filter(task => task.status === state.concluido).length > 0;
+    },
+    possuiTarefasEmAndamento(state) {
+      return state.list.filter(task => task.status === state.andamento).length > 0;
+    },
+    possuiTarefasPendentes(state) {
+      return state.list.filter(task => task.status === state.pendente).length > 0;
+    },
+    getTasklistStorage() {
+      return __load('tasklist');
+    }
   },
 })

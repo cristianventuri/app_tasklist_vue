@@ -31,3 +31,11 @@ window.__save = (item, data) => {
 window.__load = (item) => {
     return JSON.parse(localStorage.getItem(item));
 }
+
+window.__loadLastId = () => {
+    let tasklist = __load('tasklist');
+    if (tasklist) {
+        return Math.max(...tasklist.map(task => task.id))
+    }
+    return 0;
+}
