@@ -44,10 +44,21 @@ export const useTaskList = defineStore('tasklist', {
         this.list[index].status = newstatus;
         __save('tasklist', this.list);
       }
+    },
+    deleteTask(id) {
+      this.list = this.list.filter(task => task.id !== id);
+      __save('tasklist', this.list);
     }
   },
 
   getters: {
+    getTituloTask: (state) => (id) => {
+      let list = state.list.find(task => task.id === id);
+      if (list) {
+        return list.titulo;
+      }
+      return "";
+    },
     getPendentes: (state) => {
       return state.list.filter(task => task.status === state.pendente);
     },

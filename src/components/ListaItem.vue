@@ -18,9 +18,12 @@
       </div>
       <div class="action">
         <span class="action-status">
-          <i class="btn-icon btn-editar pi pi pi-times-circle" @click="clickDefineStatus(task.id, this.pendente)" v-if="task.status !== this.pendente"></i>
-          <i class="btn-icon btn-editar pi pi-exclamation-circle" @click="clickDefineStatus(task.id, this.andamento)" v-if="task.status !== this.andamento"></i>
-          <i class="btn-icon btn-editar pi pi-check-circle" @click="clickDefineStatus(task.id, this.concluido)" v-if="task.status !== this.concluido"></i>
+          <i class="btn-icon btn-editar pi pi pi-times-circle" @click="clickDefineStatus(task.id, this.pendente)"
+            v-if="task.status !== this.pendente"></i>
+          <i class="btn-icon btn-editar pi pi-exclamation-circle" @click="clickDefineStatus(task.id, this.andamento)"
+            v-if="task.status !== this.andamento"></i>
+          <i class="btn-icon btn-editar pi pi-check-circle" @click="clickDefineStatus(task.id, this.concluido)"
+            v-if="task.status !== this.concluido"></i>
         </span>
         <span class="action-item">
           <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
@@ -35,6 +38,7 @@
 import { mapActions, mapState } from 'pinia';
 import { useTaskList } from '@/stores/task.js';
 import { confirm } from '@/services/ServiceConfirm';
+import { info, success, warn, error } from '@/services/ServiceToast';
 
 export default {
   name: "ListaItem",
@@ -42,18 +46,31 @@ export default {
     lista: Array
   },
   computed: {
-    ...mapState(useTaskList, ["concluido", "andamento", "pendente"]),
+    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "getTituloTask"]),
   },
   methods: {
-    ...mapActions(useTaskList, ['updateTaskStatus']),
-    clickDefineStatus(id, iStatus) {
-      this.updateTaskStatus(id, iStatus);
+    ...mapActions(useTaskList, ['updateTaskStatus', 'deleteTask']),
+    clickDefineStatus(id, status) {
+      this.updateTaskStatus(id, status);
+      switch (status) {
+        case 0:
+          error('Atenção!', `O status da tarefa foi atualizado para pendente.`);
+          break;
+        case 1:
+          warn('Aviso!', `O status da tarefa foi atualizado para em andamento.`);
+          break;
+        case 2:
+          success('Sucesso!', `O status da tarefa foi atualizado para concluÍdo.`);
+          break;
+      }
     },
     clickEditar() {
       debugger;
+      confirm('Limpar Todas?', '<h1>teste</h1>', "pi pi-question-circle");
     },
-    clickExcluir() {
-      debugger;
+    clickExcluir(id) {
+      error('Atenção!', `A tarefa "${this.getTituloTask(id)}" foi removida da sua lista.`);
+      this.deleteTask(id);
     },
   }
 }

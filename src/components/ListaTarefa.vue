@@ -56,7 +56,7 @@ export default {
 
   .container-listas {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .sem-registros {
