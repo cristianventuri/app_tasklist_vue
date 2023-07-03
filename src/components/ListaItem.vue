@@ -37,8 +37,9 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import { useTaskList } from '@/stores/task.js';
-import { confirm } from '@/services/ServiceConfirm';
 import { info, success, warn, error } from '@/services/ServiceToast';
+import { dynamicDialog } from '@/services/ServiceDialog';
+import EditarItem from './EditarItem.vue';
 
 export default {
   name: "ListaItem",
@@ -46,7 +47,7 @@ export default {
     lista: Array
   },
   computed: {
-    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "getTituloTask"]),
+    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "getTaskById"]),
   },
   methods: {
     ...mapActions(useTaskList, ['updateTaskStatus', 'deleteTask']),
@@ -64,12 +65,16 @@ export default {
           break;
       }
     },
-    clickEditar() {
-      debugger;
-      confirm('Limpar Todas?', '<h1>teste</h1>', "pi pi-question-circle");
+    clickEditar(id) {
+      dynamicDialog(EditarItem, 'Alterar informações', {
+        data: {
+          task: this.getTaskById(id)
+        }
+      });
     },
     clickExcluir(id) {
-      error('Atenção!', `A tarefa "${this.getTituloTask(id)}" foi removida da sua lista.`);
+      let task = this.getTaskById(id)
+      error('Atenção!', `A tarefa "${task.titulo}" foi removida da sua lista.`);
       this.deleteTask(id);
     },
   }
