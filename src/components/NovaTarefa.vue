@@ -16,7 +16,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import { useTaskList } from '@/stores/task.js'
 import { mapActions, mapState } from 'pinia';
-import { info, success, warn, error } from '@/services/ServiceToast';
+import { success, warn, error } from '@/services/ServiceToast';
 import { confirm } from '@/services/ServiceConfirm';
 
 export default {

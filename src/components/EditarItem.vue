@@ -1,9 +1,15 @@
 <template>
-  <div>
-    <InputText v-model="this.form.titulo" />
-    <!-- <InputText v-model="form.descricao" /> -->
-    <Button class="p-button-danger p-button-rounded p-button-sm p-button-text" label="Cancelar" @click="this.closeDialog" />
-    <Button class="p-button-success p-button-rounded p-button-sm p-button-text" label="Salvar" @click="this.updateTitulo" />
+  <div class="edit-item" @keypress="this.pressUpdateTitulo">
+    <div class="formulario">
+      <InputText v-model="this.form.titulo" />
+      <!-- <InputText v-model="form.descricao" /> -->
+    </div>
+    <div class="action">
+      <Button class="p-button-danger p-button-rounded p-button-sm p-button-text" label="Cancelar" icon="pi pi-times"
+        @click="this.closeDialog" />
+      <Button class="p-button-primary p-button-rounded p-button-sm p-button-text" label="Confirmar" icon="pi pi-check"
+        @click="this.updateTitulo" />
+    </div>
   </div>
 </template>
 
@@ -12,7 +18,7 @@ import { mapState } from 'pinia';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import { useTaskList } from '../stores/task';
-import { info, success, warn, error } from '@/services/ServiceToast';
+import { success, error } from '@/services/ServiceToast';
 
 export default {
   name: "EditarItem",
@@ -40,6 +46,11 @@ export default {
       success('Sucesso', 'Os dados da tarefa foram atualizados.');
       this.updateTaskTitulo(this.task.id, this.form.titulo);
       this.dialogRef.close();
+    },
+    pressUpdateTitulo(event) {
+      if ((event.keyCode === 13) && (this.form.titulo.trim() !== '')) {
+        this.updateTitulo();
+      }
     }
   },
   created() {
@@ -49,4 +60,24 @@ export default {
 
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.p-dialog-content {
+  padding: 0 1.5rem 1.5rem !important;
+
+  .edit-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 20rem;
+
+    input {
+      width: 100%;
+    }
+
+    .action {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>

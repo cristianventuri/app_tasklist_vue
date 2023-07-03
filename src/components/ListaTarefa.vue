@@ -17,7 +17,7 @@
 import Button from 'primevue/button';
 import ListaItem from './ListaItem.vue';
 import { useTaskList } from '@/stores/task.js'
-import { mapActions, mapState } from 'pinia';
+import { mapState } from 'pinia';
 
 export default {
   name: "ListaTarefa",
