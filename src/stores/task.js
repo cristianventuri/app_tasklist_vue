@@ -5,8 +5,9 @@ export const useTaskList = defineStore('tasklist', {
     return {
       counter_id: __loadLastId(),
       pendente: 0,
-      andamento: 1,
-      concluido: 2,
+      analise: 1,
+      andamento: 2,
+      concluido: 3,
       list: __load('tasklist') ?? [],
     }
   },
@@ -65,6 +66,9 @@ export const useTaskList = defineStore('tasklist', {
     getPendentes: (state) => {
       return state.list.filter(task => task.status === state.pendente);
     },
+    getEmAnalise: (state) => {
+      return state.list.filter(task => task.status === state.analise);
+    },
     getEmAndamento: (state) => {
       return state.list.filter(task => task.status === state.andamento);
     },
@@ -76,6 +80,9 @@ export const useTaskList = defineStore('tasklist', {
     },
     possuiTarefasConcluidas(state) {
       return state.list.filter(task => task.status === state.concluido).length > 0;
+    },
+    possuiTarefasEmAnalise(state) {
+      return state.list.filter(task => task.status === state.analise).length > 0;
     },
     possuiTarefasEmAndamento(state) {
       return state.list.filter(task => task.status === state.andamento).length > 0;

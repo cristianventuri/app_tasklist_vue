@@ -6,8 +6,12 @@
           <i class="btn-icon btn-editar pi pi pi-times-circle"></i>
           <span class="status-icon pendente"> Pendente </span>
         </div>
+        <div class="header analise" v-if="task.status === this.analise">
+          <i class="btn-icon btn-editar pi pi-flag"></i>
+          <span class="status-icon analise"> Em análise </span>
+        </div>
         <div class="header andamento" v-if="task.status === this.andamento">
-          <i class="btn-icon btn-editar pi  pi-exclamation-circle"></i>
+          <i class="btn-icon btn-editar pi pi-exclamation-circle"></i>
           <span class="status-icon andamento"> Em andamento </span>
         </div>
         <div class="header concluido" v-if="task.status === this.concluido">
@@ -19,9 +23,10 @@
         </div>
         <div class="action">
           <span class="action-status">
-            <i class="btn-icon btn-editar pi pi pi-times-circle" title="Pendente" @click="clickDefineStatus(task.id, this.pendente)" v-if="task.status !== this.pendente"></i>
-            <i class="btn-icon btn-editar pi pi-exclamation-circle" title="Em Andamento" @click="clickDefineStatus(task.id, this.andamento)" v-if="task.status !== this.andamento"></i>
-            <i class="btn-icon btn-editar pi pi-check-circle" title="Concluído" @click="clickDefineStatus(task.id, this.concluido)" v-if="task.status !== this.concluido"></i>
+            <i class="btn-icon btn-editar pi pi pi-times-circle" title="Re-abrir" @click="clickDefineStatus(task.id, this.pendente)" v-if="task.status !== this.pendente"></i>
+            <i class="btn-icon btn-editar pi pi-flag" title="Analisar" @click="clickDefineStatus(task.id, this.analise)" v-if="task.status !== this.analise"></i>
+            <i class="btn-icon btn-editar pi pi-exclamation-circle" title="Iniciar" @click="clickDefineStatus(task.id, this.andamento)" v-if="task.status !== this.andamento"></i>
+            <i class="btn-icon btn-editar pi pi-check-circle" title="Concluír" @click="clickDefineStatus(task.id, this.concluido)" v-if="task.status !== this.concluido"></i>
           </span>
           <span class="action-item">
             <i class="btn-icon btn-editar pi pi-pencil" title="Editar" @click="clickEditar(task.id)"></i>
@@ -47,7 +52,7 @@ export default {
     lista: Array
   },
   computed: {
-    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "getTaskById"]),
+    ...mapState(useTaskList, ["concluido", "analise", "andamento", "pendente", "getTaskById"]),
   },
   methods: {
     ...mapActions(useTaskList, ['updateTaskStatus', 'deleteTask']),
@@ -58,9 +63,12 @@ export default {
           error('Atenção!', `O status da tarefa foi atualizado para pendente.`);
           break;
         case 1:
-          warn('Aviso!', `O status da tarefa foi atualizado para em andamento.`);
+          warn('Aviso!', `O status da tarefa foi atualizado para em análise.`);
           break;
         case 2:
+          warn('Aviso!', `O status da tarefa foi atualizado para em andamento.`);
+          break;
+        case 3:
           success('Sucesso!', `O status da tarefa foi atualizado para concluÍdo.`);
           break;
       }
@@ -122,6 +130,10 @@ export default {
 
       &.andamento {
         background-color: #ff922a;
+      }
+      
+      &.analise {
+        background-color: #7e91cd;
       }
 
       &.concluido {

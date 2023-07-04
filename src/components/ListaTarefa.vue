@@ -2,6 +2,7 @@
   <div class="component-takslist">
     <div class="container-listas" v-if="this.possuiTarefas">
       <ListaItem :lista="this.getPendentes" />
+      <ListaItem :lista="this.getEmAnalise" />
       <ListaItem :lista="this.getEmAndamento" />
       <ListaItem :lista="this.getConcluidas" />
     </div>
@@ -23,7 +24,7 @@ export default {
   name: "ListaTarefa",
   components: { Button, ListaItem },
   computed: {
-    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "list", "getConcluidas", "getEmAndamento", "getPendentes", "possuiTarefas"]),
+    ...mapState(useTaskList, ["concluido", "andamento", "pendente", "list", "getConcluidas", "getEmAnalise", "getEmAndamento", "getPendentes", "possuiTarefas"]),
   },
   methods: {
     getClassIconStatus(status) {
