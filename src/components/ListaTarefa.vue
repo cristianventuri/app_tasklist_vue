@@ -1,9 +1,9 @@
 <template>
   <div class="component-takslist">
     <div class="container-listas" v-if="this.possuiTarefas">
-      <ListaItem :lista="this.getPendentes"/>
-      <ListaItem :lista="this.getEmAndamento"/>
-      <ListaItem :lista="this.getConcluidas"/>
+      <ListaItem :lista="this.getPendentes" />
+      <ListaItem :lista="this.getEmAndamento" />
+      <ListaItem :lista="this.getConcluidas" />
     </div>
     <div class="sem-registros" v-else>
       <i class="pi pi-thumbs-up-fill"></i>
@@ -56,14 +56,13 @@ export default {
 
   .container-listas {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .sem-registros {
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: rgb(0 0 0 / 35%);
     border-radius: 0.4rem;
     margin-top: 2rem;
     padding: 10rem 0;

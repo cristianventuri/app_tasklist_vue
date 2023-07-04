@@ -15,8 +15,11 @@ export default {
 </script>
   
 <style lang="scss">
-section{
-  &.main{
+section {
+  &.main {
+    background: rgb(0 0 0 / 30%);
+    border-radius: .5rem;
+    padding: .5rem;
     width: 100%;
   }
 }

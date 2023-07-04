@@ -19,16 +19,13 @@
         </div>
         <div class="action">
           <span class="action-status">
-            <i class="btn-icon btn-editar pi pi pi-times-circle" @click="clickDefineStatus(task.id, this.pendente)"
-              v-if="task.status !== this.pendente"></i>
-            <i class="btn-icon btn-editar pi pi-exclamation-circle" @click="clickDefineStatus(task.id, this.andamento)"
-              v-if="task.status !== this.andamento"></i>
-            <i class="btn-icon btn-editar pi pi-check-circle" @click="clickDefineStatus(task.id, this.concluido)"
-              v-if="task.status !== this.concluido"></i>
+            <i class="btn-icon btn-editar pi pi pi-times-circle" title="Pendente" @click="clickDefineStatus(task.id, this.pendente)" v-if="task.status !== this.pendente"></i>
+            <i class="btn-icon btn-editar pi pi-exclamation-circle" title="Em Andamento" @click="clickDefineStatus(task.id, this.andamento)" v-if="task.status !== this.andamento"></i>
+            <i class="btn-icon btn-editar pi pi-check-circle" title="Concluído" @click="clickDefineStatus(task.id, this.concluido)" v-if="task.status !== this.concluido"></i>
           </span>
           <span class="action-item">
-            <i class="btn-icon btn-editar pi pi-pencil" @click="clickEditar(task.id)"></i>
-            <i class="btn-icon btn-excluir pi pi-trash" @click="clickExcluir(task.id)"></i>
+            <i class="btn-icon btn-editar pi pi-pencil" title="Editar" @click="clickEditar(task.id)"></i>
+            <i class="btn-icon btn-excluir pi pi-trash" title="Excluir" @click="clickExcluir(task.id)"></i>
           </span>
         </div>
       </li>
@@ -92,6 +89,9 @@ export default {
     
 <style lang="scss">
 .lista-itens {
+  padding-right: .25rem;
+  overflow-y: auto;
+  max-height: 90vh;
   flex: 1;
 
   ul {
